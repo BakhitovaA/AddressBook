@@ -1,78 +1,83 @@
 /**
- * Created by ALEX on 16.10.2014.
+ * Created by student on 20.10.2014.
  */
-import java.util.Scanner;
-
 public class AddressBook {
-    public static void main(String[] args) {
-        Address[] list = new Address[100];
+    private Address[] list = new Address[100];
+    private int count = 0;
 
-        System.out.println("Доступные операции:");
-        System.out.println("1. Добавить запись в книгу");
-        System.out.println("2. Поиск записи по имени человека");
-        System.out.println("3. Вывод всех записей на экран");
-        System.out.println("4. Удаление записи из книги по индексу");
-        System.out.println("5. Изменение записи");
-        System.out.println("6. Выход");
-        System.out.println("Введите нужный пункт меню: ");
-        Scanner sc = new Scanner(System.in);
-        int menu;
-        menu = sc.nextInt();
-        switch (menu) {
-            case 1: {
-                System.out.println("Введите имя:");
-                String name = sc.nextLine();
-                System.out.println("Введите телефон:");
-                String phone = sc.nextLine();
-                System.out.println("Введите емайл:");
-                String email = sc.nextLine();
-                Manager.add(list, name, phone, email);
-                System.out.println("Запись успешно добавлена");
-                break;
-            }
-            case 2: {
-                System.out.println("Введите имя:");
-                String name = sc.nextLine();
-                int[] name1 = Manager.find(list, name);
-                if (name1 [0] == -1) {
-                    System.out.println("Ничего не найдено");
-                    break;
-                }
-            }
-            case 3:
-                Manager.print(list);
-                break;
-            case 4: {
-                System.out.println("Введите индекс для удаления записи");
-                int index = sc.nextInt();
-                if (index < list.length) {
-                    Manager.delete(list, index);
-                    System.out.println("Запись успешно удалена");
-                } else {
-                    System.out.println("Неверно указан индекс");
-                }
-            }
-            case 5:
-                System.out.println("Введите индекс для изменения записи");
-                int index = sc.nextInt();
-                if (index < list.length) {
-                    System.out.println("Введите имя");
-                    String name = sc.nextLine();
-                    System.out.println("Введите телефон");
-                    String phone = sc.nextLine();
-                    System.out.println("Введите емайл");
-                    String email = sc.nextLine();
-                    Manager.edit(list, index, name, phone, email);
-                    System.out.println("Запись успешно изменена");
-                } else {
-                    System.out.println("Неверно указан индекс");
-                }
-                break;
-            case 6:
-                System.out.println("Спасибо за использование!");
-                break;
-            default:
+    //Добавление записи в книгу
+    public static void add(AddressBook book, String name, String phone, String email) {
+        Address newAddress = new Address(name, phone, email);
+        book.list[book.count] = newAddress;
+        book.count++;
+    }
 
+    //Поиск записи по имени человека
+    public static int[] find(AddressBook book, String name) {
+
+        int count = 0;
+        for (int i = 0; i < book.count; i++) {
+            if (!(book.list[i].name == null)) {
+                Address a = book.list[i];
+                if (a.name.equals(name)) {
+                     count++;
+                }
+            }
         }
+        int[] poisk = new int[count];
+        count = 0;
+        for (int i = 0; i < book.count; i++) {
+            if (!(book.list[i].name == null)) {
+                Address a = book.list[i];
+                if (a.name.equals(name)) {
+                    poisk[count] = i;
+                    count++;
+                }
+            }
+        }
+        return poisk;
+    }
+
+    // Вывод всех записей на экран
+    public static void print (AddressBook book) {
+        System.out.println(" Имя  /   телефон  /  email");
+
+        for (int i=0; i<book.count; i++) {
+            Address address = book.list[i];
+            System.out.println(i + "." + address.name + " / " + address.phone + " / " + address.email);
+        }
+    }
+
+    public static void vvod (AddressBook book) {
+            int i=0;
+            Address address = book.list[i];
+            System.out.println(i + "." + address.name + " / " + address.phone + " / " + address.email);
+
+    }
+
+    // Удаление записи из книги по индексу
+    public static void delete(AddressBook book, int index) {
+
+        book.list[index].name = null;
+        book.list[index].phone = null;
+        book.list[index].email = null;
+
+        for (int i = index; i < book.count - 1; i++) {
+            book.list[i].name = book.list[i + 1].name;
+            book.list[i].phone = book.list[i + 1].phone;
+            book.list[i].email = book.list[i + 1].email;
+        }
+        book.count --;
+    }
+
+    public static void edit (AddressBook book, int index, String name, String phone, String email){
+        book.list [index].name=name;
+        book.list [index].phone=phone;
+        book.list [index].email=email;
+    }
+
+    // Получение количества записей в книге
+    public static int getCount(AddressBook book){
+        return book.count;
     }
 }
