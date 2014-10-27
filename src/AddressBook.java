@@ -33,7 +33,6 @@ public class AddressBook {
                 Address a = book.list[i];
                 if (a.name.equals(name)) {
                     poisk[count] = i;
-                    System.out.println(i + "." + a.name + " / " + a.phone + " / " + a.email + " / " + a.year);
                     count++;
                 }
             }
@@ -42,9 +41,9 @@ public class AddressBook {
     }
 
     //Поиск записи по индексу записи в книге
-    public static void get (AddressBook book, int index) {
-        Address b = book.list[index];
-        System.out.println(index + "." + b.name + " / " + b.phone + " / " + b.email+ " / " + b.year);
+    public static void get (AddressBook book, int i) {
+        Address b = book.list[i];
+        System.out.println(i + "." + b.name + " / " + b.phone + " / " + b.email+ " / " + b.year);
     }
 
 
@@ -52,8 +51,7 @@ public class AddressBook {
     public static void print (AddressBook book) {
         System.out.println(" Имя  /   Телефон  /  email / Год рождения");
         for (int i=0; i<book.count; i++) {
-            Address address = book.list[i];
-            System.out.println(i + "." + address.name + " / " + address.phone + " / " + address.email+ " / " + address.year);
+            get(book, i);
         }
     }
 
@@ -84,6 +82,7 @@ public class AddressBook {
 
     // Получение количества записей в книге
     public static int getCount(AddressBook book){
+
         return book.count;
     }
 }
