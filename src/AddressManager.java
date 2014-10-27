@@ -39,6 +39,10 @@ public class AddressManager {
                     int [] poisk = AddressBook.find(addressBook, name);
                     if (poisk.length == 0) {
                         System.out.println("Ничего не найдено!");
+                    } else {
+                        for (int i =0; i < poisk.length; i++){
+                            AddressBook.get(addressBook, poisk[i]);
+                        }
                     }
                     break;
                 }
