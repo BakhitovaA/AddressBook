@@ -1,6 +1,3 @@
-/**
- * Created by student on 20.10.2014.
- */
 import java.util.Scanner;
 
 public class AddressManager {
