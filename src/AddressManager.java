@@ -1,3 +1,7 @@
+/**
+ * Created by ALEX on 16.10.2014.
+ */
+ 
 import java.util.Scanner;
 
 public class AddressManager {
