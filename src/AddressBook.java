@@ -1,14 +1,45 @@
-/**
- * Created by student on 20.10.2014.
- */
+import java.io.IOException;
+import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+
 public class AddressBook {
     private Address[] list = new Address[100];
     private int count = 0;
 
+    // создание файла и сохранение текста в файл
+    public static void main () throws IOException {
+        try {
+            Path path = Paths.get("C:\\Users\\ALEX\\Desktop\\Настя\\Программирование\\AddressBook.txt");
+            ArrayList<String> list = new ArrayList<String>();
+            Charset charset = Charset.forName("UTF-8");
+            Files.write(path, list, charset);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // вывод всех записей из файла
+    public static void exit () throws IOException {
+        Path path = Paths.get("C:\\Users\\ALEX\\Desktop\\Настя\\Программирование\\AddressBook.txt");
+        Charset charset = Charset.forName("UTF-8");
+        List <String> lines = Files.readAllLines(path, charset);
+        for (String line : lines) {
+            System.out.println(line);
+        }
+    }
+
     //Добавление записи в книгу
-    public static void add(AddressBook book, String name, String phone, String email, String year) {
+    public static void add (AddressBook book, String name, String phone, String email, String year) {
         Address newAddress = new Address(name, phone, email, year);
         book.list[book.count] = newAddress;
+        try {
+            main();
+        } catch (IOException ex) {
+        }
         book.count++;
     }
 
@@ -50,8 +81,9 @@ public class AddressBook {
     // Вывод всех записей на экран
     public static void print (AddressBook book) {
         System.out.println(" Имя  /   Телефон  /  email / Год рождения");
-        for (int i=0; i<book.count; i++) {
-            get(book, i);
+        try {
+            exit();
+        } catch (IOException ex) {
         }
     }
 
