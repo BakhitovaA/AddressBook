@@ -14,10 +14,17 @@ public class AddressBook {
     private int count = 0;
 
     // создание файла и сохранение текста в файл
-    public static void main () throws IOException {
+    public static void save (AddressBook book) throws IOException {
         try {
-            Path path = Paths.get("C:\\Users\\ALEX\\Desktop\\Настя\\Программирование\\AddressBook.txt");
-            ArrayList<String> list = new ArrayList<String>();
+            Path path = Paths.get("C:\\tmp\\AddressBook.txt");
+            ArrayList <String> list = new ArrayList <String> ();
+            for (int i = 0; i < book.count; i++) {
+                Address address = book.list[i];
+                list.add(address.name);
+                list.add(address.phone);
+                list.add(address.email);
+                list.add(address.year);
+            }
             Charset charset = Charset.forName("UTF-8");
             Files.write(path, list, charset);
         } catch (IOException ex) {
@@ -26,23 +33,26 @@ public class AddressBook {
     }
 
     // вывод всех записей из файла
-    public static void exit () throws IOException {
-        Path path = Paths.get("C:\\Users\\ALEX\\Desktop\\Настя\\Программирование\\AddressBook.txt");
+    public static void load (AddressBook book) throws IOException {
+        Path path = Paths.get("C:\\tmp\\AddressBook.txt");
         Charset charset = Charset.forName("UTF-8");
         List <String> lines = Files.readAllLines(path, charset);
-        for (String line : lines) {
-            System.out.println(line);
+        int i = 0;
+        while (i < lines.size()) {
+            String name = lines.get(i);
+            String phone = lines.get(i+1);
+            String email = lines.get(i+2);
+            String year = lines.get(i+3);
+            add(book, name, phone, email, year);
+            i += 4;
         }
+        System.out.println (lines);
     }
 
     //Добавление записи в книгу
     public static void add (AddressBook book, String name, String phone, String email, String year) {
         Address newAddress = new Address(name, phone, email, year);
         book.list[book.count] = newAddress;
-        try {
-            main();
-        } catch (IOException ex) {
-        }
         book.count++;
     }
 
@@ -84,9 +94,8 @@ public class AddressBook {
     // Вывод всех записей на экран
     public static void print (AddressBook book) {
         System.out.println(" Имя  /   Телефон  /  email / Год рождения");
-        try {
-            exit();
-        } catch (IOException ex) {
+        for (int i=0; i<book.count; i++) {
+            get(book, i);
         }
     }
 
