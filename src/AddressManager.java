@@ -2,11 +2,13 @@
  * Created by ALEX on 16.10.2014.
  */
  
+import java.io.IOException;
 import java.util.Scanner;
 
 public class AddressManager {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         AddressBook addressBook = new AddressBook();
+        AddressBook.load(addressBook);
         while (true) {
             System.out.println("Доступные операции:");
             System.out.println("1. Добавить запись в книгу");
@@ -15,7 +17,8 @@ public class AddressManager {
             System.out.println("4. Вывод всех записей на экран");
             System.out.println("5. Удаление записи из книги по индексу");
             System.out.println("6. Изменение записи");
-            System.out.println("7. Выход");
+            System.out.println("7. Сохранение добавленных записей в файл");
+            System.out.println("8. Выход");
             System.out.println("Введите нужный пункт меню: ");
             Scanner sc = new Scanner(System.in);
             String menu = sc.nextLine();
@@ -91,6 +94,10 @@ public class AddressManager {
                     }
                     break;
                 case 7:
+                    AddressBook.save(addressBook);
+                    System.out.println("Записи успешно сохранены!");
+                    break;
+                case 8:
                     System.out.println("Спасибо за использование!");
                     return;
                 default:
